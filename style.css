@@ -42,3 +42,7 @@ body p, body em {
 footer {
     font-family: 'Montserrat', sans-serif;
 }
+
+#info p {
+    margin: auto;
+}
