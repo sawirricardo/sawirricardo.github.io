@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathventure: The Lost Equations</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .game-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .game-screen {
+            margin: 20px;
+        }
+
+        .task-box {
+            background-color: #e6f7ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .game-controls {
+            margin-top: 20px;
+        }
+
+        .game-controls button {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+        }
+
+        .game-controls button:hover {
+            background-color: #45a049;
+        }
+        .game-map {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #location-display {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-screen">
+            <h1>Mathventure: The Lost Equations</h1>
+            <p>Selamat datang di Mathlandia! Pecahkan teka-teki matematika untuk menyelamatkan dunia.</p>
+
+            <div id="current-task" class="task-box">
+                <p id="task-description">Tugas: Selesaikan soal berikut:</p>
+                <div id="math-problem"></div>
+                <input type="text" id="answer-input" placeholder="Jawabanmu...">
+                <button id="submit-answer">Periksa Jawaban</button>
+                <p id="result-message"></p>
+            </div>
+
+            <div class="game-controls">
+                <button id="move-north">Utara</button>
+                <button id="move-south">Selatan</button>
+                <button id="move-east">Timur</button>
+                <button id="move-west">Barat</button>
+            </div>
+            <div class="game-map">
+                 <div id="location-display">Lokasi: Kota Axiom</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const mathProblemDiv = document.getElementById('math-problem');
+            const answerInput = document.getElementById('answer-input');
+            const submitButton = document.getElementById('submit-answer');
+            const resultMessage = document.getElementById('result-message');
+
+            const moveNorthButton = document.getElementById('move-north');
+            const moveSouthButton = document.getElementById('move-south');
+            const moveEastButton = document.getElementById('move-east');
+            const moveWestButton = document.getElementById('move-west');
+            const locationDisplay = document.getElementById('location-display');
+
+            let currentLocation = 'Kota Axiom';
+            let currentProblem = generateMathProblem();
+
+            locationDisplay.textContent = 'Lokasi: ' + currentLocation;
+            mathProblemDiv.textContent = currentProblem.problem;
+
+            submitButton.addEventListener('click', function () {
+                const userAnswer = parseFloat(answerInput.value);
+
+                if (userAnswer === currentProblem.answer) {
+                    resultMessage.textContent = "Benar! Kamu berhasil!";
+                    currentProblem = generateMathProblem();
+                    mathProblemDiv.textContent = currentProblem.problem;
+                    answerInput.value = '';
+                } else {
+                    resultMessage.textContent = "Salah. Coba lagi.";
+                }
+            });
+
+             moveNorthButton.addEventListener('click', function() {
+                currentLocation = 'Hutan Angka';
+                locationDisplay.textContent = 'Lokasi: ' + currentLocation;
+            });
+
+            moveSouthButton.addEventListener('click', function() {
+                currentLocation = 'Gunung Rumus';
+                locationDisplay.textContent = 'Lokasi: ' + currentLocation;
+            });
+
+                moveEastButton.addEventListener('click', function() {
+                currentLocation = 'Gurun Geometri';
+                locationDisplay.textContent = 'Lokasi: ' + currentLocation;
+            });
+
+            moveWestButton.addEventListener('click', function() {
+                currentLocation = 'Pulau Probabilitas';
+                locationDisplay.textContent = 'Lokasi: ' + currentLocation;
+            });
+
+            function generateMathProblem() {
+               const num1 = Math.floor(Math.random() * 10) + 1;
+               const num2 = Math.floor(Math.random() * 10) + 1;
+               const operator = ['+', '-', '*', '/'][Math.floor(Math.random() * 4)];
+
+               let problem, answer;
+
+               if (operator === '/') {
+                  problem = `${num1 * num2} / ${num2}`;
+                  answer = num1;
+               } else {
+                  problem = `${num1} ${operator} ${num2}`;
+                   answer = eval(problem);
+               }
+
+               return {
+                 problem: problem,
+                 answer: answer
+               };
+            }
+        });
+    </script>
+</body>
+</html>
